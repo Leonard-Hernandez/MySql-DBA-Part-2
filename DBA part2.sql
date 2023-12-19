@@ -61,6 +61,23 @@ alter table facturas drop index fecha_venta;
 /*Tener un indice en la condicion de filtro nos va a ayudar a mejorar el coste y de esta manera
 obtener las consultas mas rapido mejorando el rendimineto*/
 
+/*Mysqlslap
+
+nos sirve para emular conexiones a la base de datos y ver las estadisticas en tiempo de esa interracion
+
+mysqlslap -uroot -p --concurrency=100 --iterations=10 --create-schema=jugos_ventas --query="select * from facturas where fecha_venta = '20170101'";
+
+resultado:
+	Benchmark
+        Average number of seconds to run all queries: 3.056 seconds
+        Minimum number of seconds to run all queries: 3.031 seconds
+        Maximum number of seconds to run all queries: 3.083 seconds
+        Number of clients running queries: 100
+        Average number of queries per client: 1
+*/
+
+select * from facturas where fecha_venta = '20170101';
+
 
 
 
