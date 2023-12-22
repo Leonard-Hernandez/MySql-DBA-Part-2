@@ -78,6 +78,48 @@ resultado:
 
 select * from facturas where fecha_venta = '20170101';
 
+/* Gestion de ususarios 
+
+vamos a administration y a user y privileges
+
+le damos a add user y le ponemos un usuario y contraseña y los privilegios
+
+tambien la podemos crear con lineas de comando
+*/
+
+#creamos el usuario
+create user 'admin02'@'localhost' identified by 'Soy_admin02';
+
+#le damos todos los provilegios
+grant all privileges on *.* to 'admin02'@'localhost' with grant option;
+
+
+# Creando usuarios con menos privilegios
+
+create user 'user01'@'localhost' identified by 'Soy_user01';
+
+#le damos los privilegios necesarios
+grant select, insert, update, delete, execute, lock tables, create temporary tables 
+on *.* to 'admin02'@'localhost';
+
+
+#Creando un usuario de solo lectura
+
+create user 'read01'@'localhost' identified by 'Soy_read01';
+
+#le damos privilegios de lectura y de ejecutar storedprocedure
+grant select, execute 
+on *.* to 'read01'@'localhost';
+
+# Creando un ususario de backup
+
+create user 'backup01'@'localhost' identified by 'Soy_backup01';
+
+#le damos privilegios de lbackup
+grant select, reload, lock tables, replication client
+on *.* to 'backup01'@'localhost';
+
+
 
 
 
