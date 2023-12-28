@@ -115,11 +115,43 @@ on *.* to 'read01'@'localhost';
 
 create user 'backup01'@'localhost' identified by 'Soy_backup01';
 
-#le damos privilegios de lbackup
+#le damos privilegios de backup
 grant select, reload, lock tables, replication client
 on *.* to 'backup01'@'localhost';
 
 
+/* podemos permitir que un usuarios accese a nuestra base de datos desde otro lugar que no sea el local host
+ definiendo las ips de las que se puede conectar antes de crearlo
+ 
+ ejemplo*/
+ 
+ create user 'backup01'@'198.168.%' identified by 'Soy_backup01';
+ 
+ /*Tambien podemos limitar el acceso a los schemas*/
+ 
+create user 'user04'@'%' identified by 'Soy_user04';
 
+grant select, insert, update, delete, execute, create temporary tables, lock tables 
+on jugos_ventas.* to 'user04'@'%';
 
+/*Como tambien a las tablas*/
 
+create user 'user05'@'%' identified by 'Soy_user05';
+
+grant select, insert, update, delete
+on jugos_ventas.facturas to 'user05'@'%';
+
+grant select
+on jugos_ventas.items_facturas to 'user05'@'%';
+
+/*Revocar privilegios*/
+
+#podemos ver los privilegios con este comando
+
+select * from mysql.user;
+
+show grants for 'admin01'@'localhost';
+
+# comando para revocar todos los privilegios
+
+revoke all privileges, grant option from 'admin01'@'localhost';
